@@ -5,11 +5,12 @@ dist: clean-dist
 
 setup: venv
 
-venv: dev-packages.txt
+venv: dev-packages.txt requirements.txt
 	virtualenv venv --python=${PYTHON_VERSION}
 	. venv/bin/activate && \
 	pip3 install --upgrade pip && \
-	pip3 install -r dev-packages.txt
+	pip3 install -r dev-packages.txt && \
+	pip3 install -r requirements.txt
 
 .PHONY: test
 test: venv
