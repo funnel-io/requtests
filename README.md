@@ -6,4 +6,4 @@
 ![PyPI - License](https://img.shields.io/pypi/l/requtests)
 [![Python package](https://github.com/funnel-io/requtests/actions/workflows/python-package.yml/badge.svg)](https://github.com/funnel-io/requtests/actions/workflows/python-package.yml)
 
-Test helpers for the requests library
+Test helpers for the [requests](https://docs.python-requests.org) library
