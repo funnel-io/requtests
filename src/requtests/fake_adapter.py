@@ -17,12 +17,12 @@ class FakeAdapter(BaseAdapter):
         return next(self.responses)
 
 
-def _is_iterable(obj):
-    return hasattr(obj, "__iter__")
-
-
 def _to_generator(element_or_collection):
     if _is_iterable(element_or_collection):
         return (x for x in element_or_collection)
     else:
         return cycle([element_or_collection])
+
+
+def _is_iterable(obj):
+    return hasattr(obj, "__iter__")
