@@ -30,11 +30,6 @@ def test_fake_response_with_headers():
     assert_response(response, **response_config)
 
 
-def test_fake_response_with_empty_data():
-    response = fake_response(data={})
-    assert_response(response, json={})
-
-
 def test_fake_response_with_empty_json():
     response = fake_response(json={})
     assert_response(response, json={})

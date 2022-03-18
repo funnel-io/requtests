@@ -1,12 +1,8 @@
-import logging
 from json import dumps as to_json
 from requests.models import Response
 
-logger = logging.getLogger(__name__)
-
 
 def fake_response(
-    data=None,
     json=None,
     reason=None,
     status_code=200,
@@ -17,9 +13,6 @@ def fake_response(
     """
     Returns a populated instance of Response.
     """
-    if data is not None:
-        logger.warning("The keyword 'data' is deprecated in favour of using 'json'.")
-        json = data
 
     response = Response()
     response._content = _content(json, text)
