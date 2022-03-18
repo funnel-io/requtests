@@ -16,6 +16,7 @@ venv: dev-packages.txt requirements.txt
 test: venv
 	@ . venv/bin/activate && PYTHONPATH=src/ pytest -rsx tests/ src/ --cov ./src/requtests/ --no-cov-on-fail --cov-report term-missing --doctest-modules --doctest-continue-on-failure
 	@ . venv/bin/activate && flake8  src --exclude '#*,~*,.#*'
+	@ . venv/bin/activate && black --check src tests
 
 .PHONY: clean
 clean: clean-dist
