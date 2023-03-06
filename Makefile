@@ -1,7 +1,8 @@
 PYTHON_VERSION ?= 3.8
 
 dist: clean-dist
-	python3 setup.py sdist
+	pip install --upgrade pip build
+	python3 -m build .
 
 setup: venv
 
@@ -9,8 +10,8 @@ venv: dev-packages.txt requirements.txt
 	virtualenv venv --python=${PYTHON_VERSION}
 	. venv/bin/activate && \
 	pip3 install --upgrade pip && \
-	pip3 install -r dev-packages.txt && \
-	pip3 install -r requirements.txt
+	pip3 install --requirement dev-packages.txt && \
+	pip3 install --requirement requirements.txt
 
 .PHONY: test
 test: venv
