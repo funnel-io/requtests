@@ -19,6 +19,12 @@ test: venv
 	@ . venv/bin/activate && flake8  src --exclude '#*,~*,.#*'
 	@ . venv/bin/activate && black --check src tests
 
+.PHONY: test-focus
+test-focus: venv/setup.txt
+	@ . venv/bin/activate && PYTHONPATH=src/ pytest -vv -m focus -rsx tests/ src/ --cov ./src/requtests/ --no-cov-on-fail --cov-report term-missing --doctest-modules --doctest-continue-on-failure
+	@ . venv/bin/activate && flake8 src/ --exclude '#*,~*,.#*'
+	@ . venv/bin/activate && black --check src/ tests/
+
 .PHONY: clean
 clean: clean-dist
 	rm -rf venv
