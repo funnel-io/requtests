@@ -1,9 +1,7 @@
 PYTHON_VERSION ?= 3.8
 
 dist: clean-dist venv
-	. venv/bin/activate && \
-	pip3 install --upgrade pip build twine && \
-	python3 -m build .
+	. venv/bin/activate && python3 -m build .
 
 setup: venv
 
