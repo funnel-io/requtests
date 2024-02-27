@@ -1,4 +1,4 @@
-PYTHON_VERSION ?= 3.8
+PYTHON_VERSION ?= 3.9
 
 dist: clean-dist venv
 	. venv/bin/activate && python3 -m build .
@@ -16,7 +16,7 @@ venv: dev-requirements.txt requirements.txt
 .PHONY: test
 test: venv
 	@ . venv/bin/activate && PYTHONPATH=src/ pytest -rsx tests/ src/ --cov ./src/requtests/ --no-cov-on-fail --cov-report term-missing --doctest-modules --doctest-continue-on-failure
-	@ . venv/bin/activate && flake8  src --exclude '#*,~*,.#*'
+	@ . venv/bin/activate && flake8 src/ --exclude '#*,~*,.#*'
 	@ . venv/bin/activate && black --check src tests
 
 .PHONY: test-focus
