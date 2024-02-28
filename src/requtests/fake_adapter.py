@@ -15,7 +15,9 @@ class FakeAdapter(BaseAdapter):
     def send(self, request, **kwargs):
         if self.assertions:
             next(self.assertions)(request, **kwargs)
-        return next(self.responses)
+        response = next(self.responses)
+        response.request = request
+        return response
 
 
 def _to_generator(element_or_collection):

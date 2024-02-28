@@ -12,11 +12,14 @@ TEST_URL = "https://api.example.com/some/url"
 def test_fake_adapter():
     response = fake_response()
     adapter = FakeAdapter(response)
+    request = PreparedRequest()
+    assert response.request is None
     assert isinstance(adapter, BaseAdapter)
     assert not adapter.closed
-    assert adapter.send(PreparedRequest()) is response
+    assert adapter.send(request) is response
     assert adapter.close() is None
     assert adapter.closed
+    assert response.request is request
 
 
 def test_fake_adapter_with_assert_step():
