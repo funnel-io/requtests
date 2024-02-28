@@ -64,6 +64,16 @@ def _create_user_assertions(prepared_request, **kwargs):
 
 Returns a function behaving as `requests.request`, except that it returns a different response each time it is called. Useful to test e.g. pagination.
 
+#### `fake_delete`
+#### `fake_get`
+#### `fake_head`
+#### `fake_options`
+#### `fake_patch`
+#### `fake_post`
+#### `fake_put`
+
+Convenience functions returning partially applied `fake_request` functions with the HTTP `method` filled in.
+
 ### `fake_request_with_response`
 
 Similar to `fake_request`, except that it instantiates a single `Response` object and returns it based on its arguments.
