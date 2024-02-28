@@ -11,9 +11,15 @@ def assert_prepared_request(url=None, body=None):
 
 
 def assert_response(
-    response, json=None, reason=None, status_code=200, text=None, url=None, headers={}
+    response,
+    json=None,
+    reason=None,
+    status_code=200,
+    text=None,
+    url=None,
+    headers={},
 ):
-    assert type(response) == Response
+    assert isinstance(response, Response)
     assert response.status_code == status_code
     assert response.reason == reason
     assert response.url == url
