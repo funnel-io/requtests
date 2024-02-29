@@ -55,6 +55,27 @@ def test_fake_request_with_response():
     assert_response(response, **response_config)
 
 
-@pytest.mark.skip(reason="Pending")
 def test_fake_request_with_response_with_assertions():
-    pass
+    response_config = {
+        "json": {"some": "data"},
+        "reason": "some reason",
+        "status_code": 418,
+        "url": "some url",
+    }
+
+    assertions_called = False
+
+    def assertions(prepared_request, **_):
+        nonlocal assertions_called
+        assertions_called = True
+        assert isinstance(prepared_request, PreparedRequest)
+
+    request = fake_request_with_response(**response_config, assertions=assertions)
+    request(
+        "GET",
+        "https://api.example.com/endpoint",
+        params={"some": "param"},
+        headers={"some": "header"},
+    )
+
+    assert assertions_called

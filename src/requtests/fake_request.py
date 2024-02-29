@@ -32,11 +32,11 @@ def fake_put(*responses):
     return partial(fake_request(*responses), "put")
 
 
-def fake_request_with_response(**response_config):
+def fake_request_with_response(assertions=None, **response_config):
     """
     Creates a request function that returns a response given the response_config.
     """
-    return fake_request(fake_response(**response_config))
+    return fake_request(fake_response(**response_config), assertions=assertions)
 
 
 def fake_request(*responses, assertions=None):
