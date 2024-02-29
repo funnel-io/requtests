@@ -10,8 +10,8 @@ Test helpers for the [requests](https://docs.python-requests.org) library
 
 ## Installation
 
-Install the package `requtests` version `1.0+` from PyPI.
-The recommended `requirements.txt` line is `requtests~=1.0`.
+Install the package `requtests` version `1.1+` from PyPI.
+The recommended `requirements.txt` line is `requtests~=1.1`.
 
 ### `FakeAdapter`
 
@@ -63,6 +63,16 @@ def _create_user_assertions(prepared_request, **kwargs):
 ### `fake_request`
 
 Returns a function behaving as `requests.request`, except that it returns a different response each time it is called. Useful to test e.g. pagination.
+
+#### `fake_delete`
+#### `fake_get`
+#### `fake_head`
+#### `fake_options`
+#### `fake_patch`
+#### `fake_post`
+#### `fake_put`
+
+Convenience functions returning partially applied `fake_request` functions with the HTTP `method` filled in.
 
 ### `fake_request_with_response`
 
