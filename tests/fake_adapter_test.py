@@ -12,11 +12,14 @@ TEST_URL = "https://api.example.com/some/url"
 def test_fake_adapter():
     response = fake_response()
     adapter = FakeAdapter(response)
+    request = PreparedRequest()
+    assert response.request is None
     assert isinstance(adapter, BaseAdapter)
     assert not adapter.closed
-    assert adapter.send(PreparedRequest()) == response
+    assert adapter.send(request) is response
     assert adapter.close() is None
     assert adapter.closed
+    assert response.request is request
 
 
 def test_fake_adapter_with_assert_step():
@@ -47,8 +50,8 @@ def test_fake_adapter_with_multiple_responses():
         assertions=assert_prepared_request(url=TEST_URL, body=TEST_DATA),
     )
     request = build_request(url=TEST_URL, body=TEST_DATA)
-    assert adapter.send(request) == response_1
-    assert adapter.send(request) == response_2
+    assert adapter.send(request) is response_1
+    assert adapter.send(request) is response_2
 
 
 def test_fake_adapter_with_multiple_responses_and_assertions():
@@ -66,8 +69,8 @@ def test_fake_adapter_with_multiple_responses_and_assertions():
     )
     request_1 = build_request(url=TEST_URL, body=data_1)
     request_2 = build_request(url=TEST_URL, body=data_2)
-    assert adapter.send(request_1) == response_1
-    assert adapter.send(request_2) == response_2
+    assert adapter.send(request_1) is response_1
+    assert adapter.send(request_2) is response_2
 
 
 def test_fake_adapter_mounted_on_session():

@@ -1,4 +1,7 @@
-from requtests import fake_request_with_response, fake_response, fake_request
+import pytest
+from requests.models import PreparedRequest
+
+from requtests import fake_request, fake_request_with_response, fake_response
 from tests.test_utils import assert_response
 
 
@@ -21,6 +24,19 @@ def test_fake_request():
     )
 
 
+def test_fake_request_with_assertions():
+    assertions_called = False
+
+    def assertions(prepared_request, **_):
+        nonlocal assertions_called
+        assertions_called = True
+        assert isinstance(prepared_request, PreparedRequest)
+
+    response = fake_response(json={"some": "data"}, status_code=418)
+    fake_request(response, assertions=assertions)("get", "https://example.com")
+    assert assertions_called
+
+
 def test_fake_request_with_response():
     response_config = {
         "json": {"some": "data"},
@@ -37,3 +53,29 @@ def test_fake_request_with_response():
         headers={"some": "header"},
     )
     assert_response(response, **response_config)
+
+
+def test_fake_request_with_response_with_assertions():
+    response_config = {
+        "json": {"some": "data"},
+        "reason": "some reason",
+        "status_code": 418,
+        "url": "some url",
+    }
+
+    assertions_called = False
+
+    def assertions(prepared_request, **_):
+        nonlocal assertions_called
+        assertions_called = True
+        assert isinstance(prepared_request, PreparedRequest)
+
+    request = fake_request_with_response(**response_config, assertions=assertions)
+    request(
+        "GET",
+        "https://api.example.com/endpoint",
+        params={"some": "param"},
+        headers={"some": "header"},
+    )
+
+    assert assertions_called
