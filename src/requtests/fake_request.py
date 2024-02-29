@@ -1,4 +1,6 @@
 from functools import partial
+from requests import Session
+from requtests.fake_adapter import FakeAdapter
 from requtests.fake_response import fake_response
 
 
@@ -42,9 +44,7 @@ def fake_request(*responses):
     Creates a request function that returns the supplied responses, one at a time.
     Making a new request after the last response has been returned results in a StopIteration error.
     """
-    iterator = (response for response in responses)
-
-    def request(method, url, **kwargs):
-        return next(iterator)
-
-    return request
+    adapter = FakeAdapter(*responses)
+    session = Session()
+    session.get_adapter = lambda url: adapter
+    return session.request
