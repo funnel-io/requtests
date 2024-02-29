@@ -1,4 +1,5 @@
-from requtests import fake_request_with_response, fake_response, fake_request
+import pytest
+from requtests import fake_request, fake_request_with_response, fake_response
 from tests.test_utils import assert_response
 
 
@@ -21,6 +22,11 @@ def test_fake_request():
     )
 
 
+@pytest.mark.skip(reason="Pending")
+def test_fake_request_with_assertions():
+    pass
+
+
 def test_fake_request_with_response():
     response_config = {
         "json": {"some": "data"},
@@ -37,3 +43,8 @@ def test_fake_request_with_response():
         headers={"some": "header"},
     )
     assert_response(response, **response_config)
+
+
+@pytest.mark.skip(reason="Pending")
+def test_fake_request_with_response_with_assertions():
+    pass
