@@ -39,12 +39,12 @@ def fake_request_with_response(**response_config):
     return fake_request(fake_response(**response_config))
 
 
-def fake_request(*responses):
+def fake_request(*responses, assertions=None):
     """
     Creates a request function that returns the supplied responses, one at a time.
     Making a new request after the last response has been returned results in a StopIteration error.
     """
-    adapter = FakeAdapter(*responses)
+    adapter = FakeAdapter(*responses, assertions=assertions)
     session = Session()
     session.get_adapter = lambda url: adapter
     return session.request
