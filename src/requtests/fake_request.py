@@ -4,32 +4,32 @@ from requtests.fake_adapter import FakeAdapter
 from requtests.fake_response import fake_response
 
 
-def fake_delete(*responses):
-    return partial(fake_request(*responses), "delete")
+def fake_delete(*responses, assertions=None):
+    return partial(fake_request(*responses, assertions=assertions), "delete")
 
 
-def fake_get(*responses):
-    return partial(fake_request(*responses), "get")
+def fake_get(*responses, assertions=None):
+    return partial(fake_request(*responses, assertions=assertions), "get")
 
 
-def fake_head(*responses):
-    return partial(fake_request(*responses), "head")
+def fake_head(*responses, assertions=None):
+    return partial(fake_request(*responses, assertions=assertions), "head")
 
 
-def fake_options(*responses):
-    return partial(fake_request(*responses), "options")
+def fake_options(*responses, assertions=None):
+    return partial(fake_request(*responses, assertions=assertions), "options")
 
 
-def fake_patch(*responses):
-    return partial(fake_request(*responses), "patch")
+def fake_patch(*responses, assertions=None):
+    return partial(fake_request(*responses, assertions=assertions), "patch")
 
 
-def fake_post(*responses):
-    return partial(fake_request(*responses), "post")
+def fake_post(*responses, assertions=None):
+    return partial(fake_request(*responses, assertions=assertions), "post")
 
 
-def fake_put(*responses):
-    return partial(fake_request(*responses), "put")
+def fake_put(*responses, assertions=None):
+    return partial(fake_request(*responses, assertions=assertions), "put")
 
 
 def fake_request_with_response(assertions=None, **response_config):
