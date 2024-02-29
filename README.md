@@ -10,8 +10,8 @@ Test helpers for the [requests](https://docs.python-requests.org) library
 
 ## Installation
 
-Install the package `requtests` version `2.0+` from PyPI.
-The recommended `requirements.txt` line is `requtests~=2.0`.
+Install the package `requtests` version `1.1+` from PyPI.
+The recommended `requirements.txt` line is `requtests~=1.1`.
 
 ### `FakeAdapter`
 
