@@ -2,7 +2,7 @@ import pytest
 from requests import Session
 from requests.adapters import BaseAdapter
 from requests.models import PreparedRequest
-from requtests import fake_response, FakeAdapter
+from requtests import FakeAdapter, fake_response
 from .test_utils import assert_prepared_request, build_request
 
 TEST_DATA = "some data"
@@ -13,8 +13,10 @@ def test_fake_adapter():
     response = fake_response()
     adapter = FakeAdapter(response)
     assert isinstance(adapter, BaseAdapter)
+    assert not adapter.closed
     assert adapter.send(PreparedRequest()) == response
     assert adapter.close() is None
+    assert adapter.closed
 
 
 def test_fake_adapter_with_assert_step():

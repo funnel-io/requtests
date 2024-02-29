@@ -5,11 +5,12 @@ from requests.adapters import BaseAdapter
 class FakeAdapter(BaseAdapter):
     def __init__(self, *responses, assertions=None):
         super().__init__()
+        self.closed = 0
         self.responses = _to_generator(responses)
         self.assertions = _to_generator(assertions) if assertions else None
 
     def close(self):
-        pass
+        self.closed += 1
 
     def send(self, request, **kwargs):
         if self.assertions:
