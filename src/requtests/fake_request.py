@@ -48,5 +48,5 @@ def fake_request(*responses, assertions=None) -> Callable[..., Response]:
     """
     adapter = FakeAdapter(*responses, assertions=assertions)
     session = Session()
-    session.get_adapter = lambda url: adapter
+    setattr(session, "get_adapter", lambda url: adapter)
     return session.request
