@@ -1,19 +1,17 @@
 import pytest
-from requests.models import PreparedRequest
 from requtests import ParsedRequest
+from .test_utils import build_request
 
 
 @pytest.fixture
 def prepared_request():
-    prepared_request = PreparedRequest()
-    prepared_request.prepare(
+    return build_request(
         method="GET",
         url="https://api.example.com",
         params={"a": 1, "b": 2, "c": [3, 4, 5]},
         json={"some": "data"},
         headers={"Authorization": "Bearer test-token"},
     )
-    return prepared_request
 
 
 def test_parsing_a_prepared_request(prepared_request):

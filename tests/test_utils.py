@@ -32,8 +32,14 @@ def assert_response(
         assert response.text == text
 
 
-def build_request(url=None, body=None):
-    request = PreparedRequest()
-    request.url = url
-    request.body = body
-    return request
+def build_request(*, url, data=None, headers=None, json=None, method="GET", params=None):
+    prepared_request = PreparedRequest()
+    prepared_request.prepare(
+        method=method.upper(),
+        url=url,
+        params=params,
+        data=data,
+        json=json,
+        headers=headers,
+    )
+    return prepared_request
