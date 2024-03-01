@@ -1,5 +1,6 @@
 from json import dumps as to_json
 from requests.models import Response
+from requests.structures import CaseInsensitiveDict
 
 
 def fake_response(
@@ -19,7 +20,7 @@ def fake_response(
     response.reason = reason
     response.status_code = status_code
     response.url = url
-    response.headers = headers or {}
+    response.headers = CaseInsensitiveDict(**(headers or {}))
     return response
 
 
