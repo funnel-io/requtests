@@ -102,13 +102,9 @@ def test_login():
 
 Returns a `requests.Response` object with either the return value of its `json()` method set to a python data structure or its `text` property set.
 
-### `parse_request`
-
-A test helper function taking a `requests.models.PreparedRequest` object wrapping it in a `ParsedRequest` object to make it easier to write assertions.
-
 ### `ParsedRequest`
 
-A test helper object wrapping a `ParsedRequest` object to make it easier to write assertions.
+A test helper object wrapping a `PreparedRequest` object to make it easier to write assertions.
 
 #### Example
 
@@ -116,7 +112,7 @@ A test helper object wrapping a `ParsedRequest` object to make it easier to writ
 from requtests import parsed_request
 
 def _create_user_assertions(prepared_request, **kwargs):
-    parsed_request = parse_request(prepared_request)
+    parsed_request = ParsedRequest(prepared_request)
     assert parsed_request.method == "POST"
     assert parsed_request.base_url == "https://example.com/users"
     assert parsed_request.url_params == {"action": "create"}

@@ -11,7 +11,7 @@ from .fake_request import (
     fake_request_with_response,
 )
 from .fake_response import fake_response
-from .parse_request import parse_request, ParsedRequest
+from .parsed_request import ParsedRequest
 
 __all__ = [
     "FakeAdapter",
@@ -25,7 +25,6 @@ __all__ = [
     "fake_request",
     "fake_request_with_response",
     "fake_response",
-    "parse_request",
     "ParsedRequest",
 ]
 __version__ = "1.2.0-dev"
