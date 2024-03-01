@@ -10,8 +10,8 @@ Test helpers for the [requests](https://docs.python-requests.org) library
 
 ## Installation
 
-Install the package `requtests` version `1.1+` from PyPI.
-The recommended `requirements.txt` line is `requtests~=1.1`.
+Install the package `requtests` version `1.2+` from PyPI.
+The recommended `requirements.txt` line is `requtests~=1.2`.
 
 ### `FakeAdapter`
 
@@ -23,8 +23,8 @@ The faked adapter can be mounted using the standard `mount` method on an instanc
 #### Example
 
 ```python3
-from requtests import FakeAdapter, fake_response
 from requests import Session
+from requtests import FakeAdapter, fake_response
 
 
 class Client:
@@ -96,9 +96,30 @@ def test_login():
     password = "my-password"
     request_func = fake_request_with_response(json={"token": "my-login-token"})
     assert login(username, password, request_func=request_func) == "my-login-token"
-
 ```
 
 ### `fake_response`
 
 Returns a `requests.Response` object with either the return value of its `json()` method set to a python data structure or its `text` property set.
+
+### `parse_request`
+
+A test helper function taking a `requests.models.PreparedRequest` object wrapping it in a `ParsedRequest` object to make it easier to write assertions.
+
+### `ParsedRequest`
+
+A test helper object wrapping a `ParsedRequest` object to make it easier to write assertions.
+
+#### Example
+
+```python3
+from requtests import parsed_request
+
+def _create_user_assertions(prepared_request, **kwargs):
+    parsed_request = parse_request(prepared_request)
+    assert parsed_request.method == "POST"
+    assert parsed_request.base_url == "https://example.com/users"
+    assert parsed_request.url_params == {"action": "create"}
+    assert parsed_request.headers["Authorization"] == "Bearer token"
+    assert parsed_request.body == {"username": "my_username"}
+```

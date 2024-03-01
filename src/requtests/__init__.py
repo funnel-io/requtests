@@ -25,6 +25,6 @@ __all__ = [
     "fake_request_with_response",
     "fake_response",
 ]
-__version__ = "1.1.0"
+__version__ = "1.2.0-dev"
 
 VERSION = __version__
