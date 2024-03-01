@@ -1,6 +1,4 @@
-import pytest
 from requests.models import PreparedRequest
-
 from requtests import fake_request, fake_request_with_response, fake_response
 from tests.test_utils import assert_response
 

@@ -1,6 +1,6 @@
 import pytest
 from requtests import ParsedRequest
-from .test_utils import build_request
+from tests.test_utils import build_request
 
 
 @pytest.fixture
