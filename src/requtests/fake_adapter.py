@@ -1,6 +1,5 @@
 from itertools import cycle
-from typing import Any, List, Union
-from typing_extensions import Protocol
+from typing import Any, List, Protocol, Union
 from requests.adapters import BaseAdapter
 from requests.models import Response, PreparedRequest
 
