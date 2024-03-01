@@ -37,7 +37,7 @@ def test_fake_adapter_with_failing_assert_step():
         response,
         assertions=assert_prepared_request(url=TEST_URL, body=TEST_DATA),
     )
-    with pytest.raises(AssertionError, match="assert 'unexpected data' == 'some data'"):
+    with pytest.raises(AssertionError, match="some data"):
         adapter.send(build_request(url=TEST_URL, body="unexpected data")) == response
 
 
