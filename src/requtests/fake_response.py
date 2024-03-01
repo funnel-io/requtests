@@ -8,10 +8,10 @@ def fake_response(
     status_code=200,
     text=None,
     url=None,
-    headers={},
+    headers=None,
 ) -> Response:
     """
-    Returns a populated instance of Response.
+    Returns a populated instance of requests.models.Response.
     """
 
     response = Response()
@@ -19,7 +19,7 @@ def fake_response(
     response.reason = reason
     response.status_code = status_code
     response.url = url
-    response.headers = headers
+    response.headers = headers or {}
     return response
 
 
