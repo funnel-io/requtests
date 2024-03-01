@@ -1,23 +1,11 @@
 from itertools import cycle
-from typing import Any, List, Protocol, Union
 from requests.adapters import BaseAdapter
-from requests.models import Response, PreparedRequest
-
-
-class AssertionFunction(Protocol):
-    def __call__(self, prepared_request: PreparedRequest, **kwargs) -> Any:
-        """
-        An assertion function is expected to raise an error if any of its assertions fail.
-        """
-        pass
+from requests.models import Response
+from .protocols import OptionalAssertions
 
 
 class FakeAdapter(BaseAdapter):
-    def __init__(
-        self,
-        *responses: Response,
-        assertions: Union[None, AssertionFunction, List[AssertionFunction]] = None
-    ):
+    def __init__(self, *responses: Response, assertions: OptionalAssertions = None):
         super().__init__()
         self.closed = 0
         self.responses = _to_generator(responses)
