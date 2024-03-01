@@ -114,8 +114,8 @@ from requtests import parsed_request
 def _create_user_assertions(prepared_request, **kwargs):
     parsed_request = ParsedRequest(prepared_request)
     assert parsed_request.method == "POST"
-    assert parsed_request.base_url == "https://example.com/users"
+    assert parsed_request.url == "https://example.com/users"
     assert parsed_request.url_params == {"action": "create"}
     assert parsed_request.headers["Authorization"] == "Bearer token"
-    assert parsed_request.body == {"username": "my_username"}
+    assert parsed_request.json == {"username": "my_username"}
 ```
