@@ -9,7 +9,7 @@ def fake_response(
     text=None,
     url=None,
     headers={},
-):
+) -> Response:
     """
     Returns a populated instance of Response.
     """
