@@ -38,3 +38,28 @@ def test_parsing_a_prepared_request(prepared_request):
     assert parsed.url_params == {"a": "1", "b": "2", "c": ["3", "4", "5"]}
     assert parsed.json == {"some": "data"}
     assert parsed.text == '{"some": "data"}'
+
+
+@pytest.mark.skip
+def test_endpoint():
+    pass
+
+
+@pytest.mark.skip
+def test_url_params():
+    pass
+
+
+@pytest.mark.skip
+def test_json_with_an_empty_body():
+    pass
+
+
+@pytest.mark.skip
+def test_json_with_an_invalid_json_body():
+    pass
+
+
+@pytest.mark.skip
+def test_text_with_an_empty_body():
+    pass
