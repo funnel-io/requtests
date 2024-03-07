@@ -1,6 +1,6 @@
 from itertools import cycle
+from requests import Response
 from requests.adapters import BaseAdapter
-from requests.models import Response
 from .protocols import OptionalAssertions
 
 

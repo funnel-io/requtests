@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, List, Optional, Union
 from urllib.parse import parse_qs, urlparse
 
 
@@ -10,7 +10,11 @@ class ParsedRequest:
         self._parsed_query = parse_qs(self._parsed_url.query)
 
     @property
-    def url(self) -> str:
+    def body(self) -> Optional[bytes]:
+        return self.prepared_request.body
+
+    @property
+    def endpoint(self) -> str:
         return f"{self._parsed_url.scheme}://{self._parsed_url.netloc}{self._parsed_url.path}"
 
     @property
@@ -24,6 +28,14 @@ class ParsedRequest:
     @property
     def method(self) -> str:
         return self.prepared_request.method
+
+    @property
+    def text(self) -> str:
+        return self.prepared_request.body.decode()
+
+    @property
+    def url(self) -> str:
+        return self.prepared_request.url
 
     @property
     def url_params(self) -> Dict[str, Any]:
