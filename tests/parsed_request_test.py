@@ -16,6 +16,11 @@ def prepared_request():
     )
 
 
+@pytest.fixture
+def parsed_request(prepared_request):
+    return ParsedRequest(prepared_request)
+
+
 def test_parsing_a_prepared_request(prepared_request):
     assert prepared_request is prepared_request
     assert prepared_request.method == "GET"
@@ -42,27 +47,24 @@ def test_parsing_a_prepared_request(prepared_request):
     assert parsed.text == '{"some": "data"}'
 
 
-def test_json_with_an_empty_body(prepared_request):
-    parsed = ParsedRequest(prepared_request)
-    parsed.prepared_request.body = None
+def test_json_with_an_empty_body(parsed_request):
+    parsed_request.prepared_request.body = None
     expected_message = "the JSON object must be str, bytes or bytearray, not NoneType"
     with pytest.raises(TypeError, match=expected_message):
-        assert parsed.json
+        assert parsed_request.json
 
 
-def test_json_with_an_invalid_json_body(prepared_request):
-    parsed = ParsedRequest(prepared_request)
-    parsed.prepared_request.body = '{"broken": "json'
+def test_json_with_an_invalid_json_body(parsed_request):
+    parsed_request.prepared_request.body = '{"broken": "json'
     expected_message = re.escape("Unterminated string starting at: line 1 column 12 (char 11)")
     with pytest.raises(JSONDecodeError, match=expected_message):
-        assert parsed.json
+        assert parsed_request.json
 
 
-def test_text_with_an_empty_body(prepared_request):
-    parsed = ParsedRequest(prepared_request)
-    parsed.prepared_request.body = None
-    assert parsed.text == ""
+def test_text_with_an_empty_body(parsed_request):
+    parsed_request.prepared_request.body = None
+    assert parsed_request.text == ""
 
 
-def test_repr(prepared_request):
-    assert repr(ParsedRequest(prepared_request)) == "<ParsedRequest [GET]>"
+def test_repr(parsed_request):
+    assert repr(parsed_request) == "<ParsedRequest [GET]>"
