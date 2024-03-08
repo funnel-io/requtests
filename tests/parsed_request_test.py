@@ -1,3 +1,5 @@
+from json import JSONDecodeError
+import re
 import pytest
 from requtests import ParsedRequest
 from tests.test_utils import build_request
@@ -35,31 +37,28 @@ def test_parsing_a_prepared_request(prepared_request):
     assert parsed.headers is prepared_request.headers
 
     assert parsed.endpoint == "https://api.example.com/"
-    assert parsed.url_params == {"a": "1", "b": "2", "c": ["3", "4", "5"]}
+    assert parsed.query == {"a": "1", "b": "2", "c": ["3", "4", "5"]}
     assert parsed.json == {"some": "data"}
     assert parsed.text == '{"some": "data"}'
 
 
-@pytest.mark.skip
-def test_endpoint():
-    pass
+def test_json_with_an_empty_body(prepared_request):
+    parsed = ParsedRequest(prepared_request)
+    parsed.prepared_request.body = None
+    expected_message = "the JSON object must be str, bytes or bytearray, not NoneType"
+    with pytest.raises(TypeError, match=expected_message):
+        assert parsed.json
 
 
-@pytest.mark.skip
-def test_url_params():
-    pass
+def test_json_with_an_invalid_json_body(prepared_request):
+    parsed = ParsedRequest(prepared_request)
+    parsed.prepared_request.body = '{"broken": "json'
+    expected_message = re.escape("Unterminated string starting at: line 1 column 12 (char 11)")
+    with pytest.raises(JSONDecodeError, match=expected_message):
+        assert parsed.json
 
 
-@pytest.mark.skip
-def test_json_with_an_empty_body():
-    pass
-
-
-@pytest.mark.skip
-def test_json_with_an_invalid_json_body():
-    pass
-
-
-@pytest.mark.skip
-def test_text_with_an_empty_body():
-    pass
+def test_text_with_an_empty_body(prepared_request):
+    parsed = ParsedRequest(prepared_request)
+    parsed.prepared_request.body = None
+    assert parsed.text == ""

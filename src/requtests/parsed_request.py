@@ -23,6 +23,9 @@ class ParsedRequest:
 
     @property
     def json(self) -> Any:
+        """
+        The body of the prepared request, parsed as JSON.
+        """
         return json.loads(self.prepared_request.body)
 
     @property
@@ -30,16 +33,19 @@ class ParsedRequest:
         return self.prepared_request.method
 
     @property
+    def query(self) -> Dict[str, Any]:
+        return {key: _delist(value) for key, value in self._parsed_query.items()}
+
+    @property
     def text(self) -> str:
-        return self.prepared_request.body.decode()
+        """
+        The body of the prepared request, decoded as Unicode.
+        """
+        return self.prepared_request.body.decode() if self.prepared_request.body else ""
 
     @property
     def url(self) -> str:
         return self.prepared_request.url
-
-    @property
-    def url_params(self) -> Dict[str, Any]:
-        return {key: _delist(value) for key, value in self._parsed_query.items()}
 
 
 def _delist(value: List[Any]) -> Union[Any, List[Any]]:
