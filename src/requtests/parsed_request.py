@@ -9,6 +9,9 @@ class ParsedRequest:
         self._parsed_url = urlparse(self.prepared_request.url)
         self._parsed_query = parse_qs(self._parsed_url.query)
 
+    def __repr__(self):
+        return f"<{self.__class__.__name__} [{self.method}]>"
+
     @property
     def body(self) -> Optional[bytes]:
         return self.prepared_request.body

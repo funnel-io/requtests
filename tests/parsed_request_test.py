@@ -62,3 +62,7 @@ def test_text_with_an_empty_body(prepared_request):
     parsed = ParsedRequest(prepared_request)
     parsed.prepared_request.body = None
     assert parsed.text == ""
+
+
+def test_repr(prepared_request):
+    assert repr(ParsedRequest(prepared_request)) == "<ParsedRequest [GET]>"
