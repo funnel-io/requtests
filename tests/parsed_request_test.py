@@ -2,7 +2,7 @@ from json import JSONDecodeError
 import pytest
 import re
 from requtests import ParsedRequest
-from requtests.parsed_request import CannotParseBodyAsJson
+from requtests.parsed_request import CannotParseBodyAsJSON
 from tests.test_utils import build_request
 
 
@@ -51,7 +51,7 @@ def test_parsing_a_prepared_request(prepared_request):
 def test_json_with_an_empty_body(parsed_request):
     parsed_request.prepared_request.body = None
     expected_message = "the JSON object must be str, bytes or bytearray, not NoneType"
-    with pytest.raises(CannotParseBodyAsJson, match=expected_message) as exc_info:
+    with pytest.raises(CannotParseBodyAsJSON, match=expected_message) as exc_info:
         parsed_request.json
     underlying_error = exc_info.value.error
     assert isinstance(underlying_error, TypeError)
@@ -60,7 +60,7 @@ def test_json_with_an_empty_body(parsed_request):
 def test_json_with_an_invalid_json_body(parsed_request):
     parsed_request.prepared_request.body = '{"broken": "json'
     expected_message = re.escape("Unterminated string starting at: line 1 column 12 (char 11)")
-    with pytest.raises(CannotParseBodyAsJson, match=expected_message) as exc_info:
+    with pytest.raises(CannotParseBodyAsJSON, match=expected_message) as exc_info:
         parsed_request.json
     underlying_error = exc_info.value.error
     assert isinstance(underlying_error, JSONDecodeError)

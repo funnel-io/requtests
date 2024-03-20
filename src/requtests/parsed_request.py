@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Optional, Union
 from urllib.parse import parse_qs, urlparse
 
 
-class CannotParseBodyAsJson(RuntimeError):
+class CannotParseBodyAsJSON(RuntimeError):
     def __init__(self, error):
         super().__init__(error)
         self.error = error
@@ -39,7 +39,7 @@ class ParsedRequest:
         try:
             return json.loads(self.prepared_request.body)
         except (TypeError, JSONDecodeError) as e:
-            raise CannotParseBodyAsJson(e)
+            raise CannotParseBodyAsJSON(e)
 
     @property
     def method(self) -> str:
