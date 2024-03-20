@@ -104,7 +104,12 @@ Returns a `requests.Response` object with either the return value of its `json()
 
 ### `ParsedRequest`
 
-A test helper object wrapping a `PreparedRequest` object to make it easier to write assertions.
+A test helper object wrapping a `PreparedRequest` object to make it easier to write assertions. In addition to wrapping the `PreparedRequest`'s `body`, `headers`, `method`, and `url` properties, it also provides the following convenience properties.
+
+* `endpoint` - the URL without any query parameters.
+* `query` - any query parameters, parsed and decoded.
+* `json` - the body parsed as JSON. 
+* `text` - the body decoded as a string.
 
 #### Example
 
@@ -114,9 +119,11 @@ from requtests import ParsedRequest
 def _create_user_assertions(prepared_request, **kwargs):
     parsed_request = ParsedRequest(prepared_request)
     assert parsed_request.method == "POST"
+    assert parsed_request.url == "https://example.com/users?action=create"
     assert parsed_request.endpoint == "https://example.com/users"
     assert parsed_request.query == {"action": "create"}
     assert parsed_request.headers["Authorization"] == "Bearer token"
+    assert parsed_request.body == b'{"username": "my_username"}'
     assert parsed_request.json == {"username": "my_username"}
     assert parsed_request.text == '{"username": "my_username"}'
 ```
