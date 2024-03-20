@@ -1,6 +1,13 @@
 import json
+from json import JSONDecodeError
 from typing import Any, Dict, List, Optional, Union
 from urllib.parse import parse_qs, urlparse
+
+
+class CannotParseBodyAsJson(RuntimeError):
+    def __init__(self, error):
+        super().__init__(error)
+        self.error = error
 
 
 class ParsedRequest:
@@ -29,7 +36,10 @@ class ParsedRequest:
         """
         The body of the prepared request, parsed as JSON.
         """
-        return json.loads(self.prepared_request.body)
+        try:
+            return json.loads(self.prepared_request.body)
+        except (TypeError, JSONDecodeError) as e:
+            raise CannotParseBodyAsJson(e)
 
     @property
     def method(self) -> str:
