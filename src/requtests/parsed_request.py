@@ -35,6 +35,8 @@ class ParsedRequest:
     def json(self) -> Any:
         """
         The body of the prepared request, parsed as JSON.
+
+        Raises a CannotParseBodyAsJSON error if the body is not valid JSON.
         """
         try:
             return json.loads(self.prepared_request.body)
