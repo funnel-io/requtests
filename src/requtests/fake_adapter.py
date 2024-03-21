@@ -1,9 +1,11 @@
 from itertools import cycle
+from requests import Response
 from requests.adapters import BaseAdapter
+from .protocols import OptionalAssertions
 
 
 class FakeAdapter(BaseAdapter):
-    def __init__(self, *responses, assertions=None):
+    def __init__(self, *responses: Response, assertions: OptionalAssertions = None):
         super().__init__()
         self.closed = 0
         self.responses = _to_generator(responses)

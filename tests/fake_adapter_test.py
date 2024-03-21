@@ -28,7 +28,7 @@ def test_fake_adapter_with_assert_step():
         response,
         assertions=assert_prepared_request(url=TEST_URL, body=TEST_DATA),
     )
-    assert adapter.send(build_request(url=TEST_URL, body=TEST_DATA)) == response
+    assert adapter.send(build_request(url=TEST_URL, data=TEST_DATA)) == response
 
 
 def test_fake_adapter_with_failing_assert_step():
@@ -37,8 +37,8 @@ def test_fake_adapter_with_failing_assert_step():
         response,
         assertions=assert_prepared_request(url=TEST_URL, body=TEST_DATA),
     )
-    with pytest.raises(AssertionError, match="assert 'unexpected data' == 'some data'"):
-        adapter.send(build_request(url=TEST_URL, body="unexpected data")) == response
+    with pytest.raises(AssertionError, match="some data"):
+        adapter.send(build_request(url=TEST_URL, data="unexpected data")) == response
 
 
 def test_fake_adapter_with_multiple_responses():
@@ -49,26 +49,24 @@ def test_fake_adapter_with_multiple_responses():
         response_2,
         assertions=assert_prepared_request(url=TEST_URL, body=TEST_DATA),
     )
-    request = build_request(url=TEST_URL, body=TEST_DATA)
+    request = build_request(url=TEST_URL, data=TEST_DATA)
     assert adapter.send(request) is response_1
     assert adapter.send(request) is response_2
 
 
 def test_fake_adapter_with_multiple_responses_and_assertions():
-    data_1 = TEST_DATA
-    data_2 = "some more data"
     response_1 = fake_response(status_code=429)
     response_2 = fake_response()
     adapter = FakeAdapter(
         response_1,
         response_2,
         assertions=[
-            assert_prepared_request(url=TEST_URL, body=data_1),
-            assert_prepared_request(url=TEST_URL, body=data_2),
+            assert_prepared_request(url=TEST_URL, body=TEST_DATA),
+            assert_prepared_request(url=TEST_URL, body=b'{"even": "more data"}'),
         ],
     )
-    request_1 = build_request(url=TEST_URL, body=data_1)
-    request_2 = build_request(url=TEST_URL, body=data_2)
+    request_1 = build_request(url=TEST_URL, data=TEST_DATA)
+    request_2 = build_request(url=TEST_URL, json={"even": "more data"})
     assert adapter.send(request_1) is response_1
     assert adapter.send(request_2) is response_2
 

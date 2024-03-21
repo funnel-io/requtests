@@ -1,5 +1,5 @@
 from requtests import fake_response
-from .test_utils import assert_response
+from tests.test_utils import assert_response
 
 
 def test_fake_response_with_json_data():
